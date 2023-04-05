@@ -15,9 +15,11 @@ async function registerUser(req: Request, res: Response): Promise<void> {
   const passwordHash = await argon2.hash(password);
 
   try {
-    const newUser = await addNewUser(username, passwordHash);
-
-    res.status(201).json(newUser);
+    // const newUser =
+    await addNewUser(username, passwordHash);
+    // res.json(newUser);
+    res.redirect('/login');
+    // res.status(201);
   } catch (err) {
     console.error(err);
     const databaseErrorMessage = parseDatabaseError(err);
@@ -49,7 +51,8 @@ async function logIn(req: Request, res: Response): Promise<void> {
   };
   req.session.isLoggedIn = true;
 
-  res.sendStatus(200);
+  res.redirect('/shrink');
+  // res.sendStatus(200);
 }
 
 export { registerUser, logIn };
